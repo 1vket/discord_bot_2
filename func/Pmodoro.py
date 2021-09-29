@@ -4,20 +4,13 @@ import asyncio
 
 # -P or -pomodoro で実行
 # -P [clock num]
-async def pomodoro(message) -> None:
+async def pomodoro(message, vc=None) -> None:
 
     # clock を設定
     try:
         clock = int(message.content.split()[1])
     except IndexError:
         clock = 1
-
-    # voice channel
-    if (message.author.voice != None):
-        channel = message.author.voice.channel
-        vc = await channel.connect()
-    else:
-        vc = None
 
     nextTime = datetime.datetime.now()
 
@@ -30,7 +23,7 @@ async def pomodoro(message) -> None:
                 nextTime = datetime.datetime.now() + datetime.timedelta(minutes=25)
                 qk = False
                 await chaimu(message, vc)
-                await message.channel.send('--Concentration!!--' + datetime.datetime.now().strftime('(%m-%d %H:%M') +" ~ "+ nextTime.strftime('%H:%M)')  + '\n頑張ってね')
+                await message.channel.send('--focus!!--' + datetime.datetime.now().strftime('(%m-%d %H:%M') +" ~ "+ nextTime.strftime('%H:%M)')  + '\n頑張ってね')
                 i += 1
             else:
                 # 終了フラグ
